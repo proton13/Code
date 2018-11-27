@@ -9,13 +9,11 @@ u0 = 2
 T = 4
 
 lve = np.array([2**1, 2**2, 2**3, 2**4, 2**5, 2**6, 2**7, 2**8, 2**9])
-#lve = np.array([2**1])
 ve = 1. / lve
 nve = lve.size
 
 lvt = 10*np.array([10**4, 2**1, 2**2, 2**3, 2**4,
                    2**5, 2**6, 2**7, 2**8, 2**9])
-#lvt = np.array([10**4])
 vt = 1. / lvt
 nvt = lvt.size
 

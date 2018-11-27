@@ -38,25 +38,29 @@ def solver(lbd, T, eps, t, u0, v0):
         d = u[k - 1] * u[k - 1].conjugate() * u[k - 1] / (eps**2 * b)
         A = np.array([gmm + d / bp, nu - d / bm, -
                       d / bp + d / bm], dtype=complex)
-        B = np.array(
-            [[np.exp(1j * bp * t), 1j * bp * np.exp(1j * bp * t)], [-np.exp(1j * bm * t), -1j * bm * np.exp(1j * bm * t)]])
+        B = np.array([[np.exp(1j * bp * t), 1j * bp * np.exp(1j * bp * t)],
+                      [-np.exp(1j * bm * t), -1j * bm * np.exp(1j * bm * t)]])
         C = np.zeros((5, 5, 2), dtype=complex)
 
         for ai1 in range(3):
             for ai2 in range(3):
                 for ai3 in range(3):
                     for bi in range(2):
-                        ci = iA[ai1, 0] - iA[ai2, 0] + iA[ai3, 0] + iB[bi, 0] + 2
-                        cj = iA[ai1, 1] - iA[ai2, 1] + iA[ai3, 1] + iB[bi, 1] + 2
-                        C[ci, cj, 0] += A[ai1] * A[ai2].conjugate() * A[ai3] * \
-                            B[bi, 0]
-                        C[ci, cj, 1] += A[ai1] * A[ai2].conjugate() * A[ai3] * \
-                            B[bi, 1]
+                        ci = iA[ai1, 0] - iA[ai2, 0] + \
+                            iA[ai3, 0] + iB[bi, 0] + 2
+                        cj = iA[ai1, 1] - iA[ai2, 1] + \
+                            iA[ai3, 1] + iB[bi, 1] + 2
+                        C[ci, cj, 0] += A[ai1] * A[ai2].conjugate() * \
+                            A[ai3] * B[bi, 0]
+                        C[ci, cj, 1] += A[ai1] * A[ai2].conjugate() * \
+                            A[ai3] * B[bi, 1]
 
         [u1i, u2i] = np.tensordot(C, I, ((0, 1), (0, 1)))
 
-        u[k] = gmm * np.exp(1j * bp * t) + nu * np.exp(1j *bm * t) + u1i * 1j / (eps**2 * b)
-        v[k] = gmm * np.exp(1j * bp * t) * 1j * bp + nu * np.exp(1j * bm * t) * 1j * bm + u2i * 1j / (eps**2 * b)
+        u[k] = gmm * np.exp(1j * bp * t) + nu * \
+            np.exp(1j * bm * t) + u1i * 1j / (eps**2 * b)
+        v[k] = gmm * np.exp(1j * bp * t) * 1j * bp + nu * \
+            np.exp(1j * bm * t) * 1j * bm + u2i * 1j / (eps**2 * b)
 
         p[k] = u[k].real
 
