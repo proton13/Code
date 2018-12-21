@@ -29,7 +29,7 @@ def solver(lbd, T, eps, t, u0, v0):
     u[0] = u0
     v[0] = v0
     p[0] = u[0].real
-    print(n)
+    print("eps=",eps,"tau=",t)
     for k in range(n):
         x[k] = k * t
     for k in range(1, n):
